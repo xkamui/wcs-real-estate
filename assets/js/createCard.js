@@ -1,9 +1,10 @@
-import houseToRent from "./houseToRent.js"
-
 export default function createCard(card, elem) {
+
+    console.log(card)
 
     const cardWrapper = document.createElement('div')
           cardWrapper.classList.add('card')
+          cardWrapper.setAttribute('data-available', card.available)
 
           cardWrapper.innerHTML = `<div class="card-header">
                                       <div class="card-img"
