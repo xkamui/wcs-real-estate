@@ -1,9 +1,14 @@
 import houseToRent from "./houseToRent.js"
 import createCard from "./createCard.js"
 import manageAvailable from "./manageAvailable.js"
+import manageTypes from "./manageTypes.js"
 
+//## Define most used elements
 const cardsElement = document.querySelector('.cards')
+const availableCheckbox = document.querySelector('#available')
+const typesSelect = document.querySelector('#types')
 
+//## Init all cards
 createCards(houseToRent)
 
 //## Create all cards from given array of Objects
@@ -12,8 +17,16 @@ function createCards(cards) {
     cards.map((card) => createCard(card, cardsElement))
 }
 
-document.querySelector('#available').addEventListener('change', function(e){
+//## Display cards which are available, from the checkbox
+availableCheckbox.addEventListener('change', function (e) {
     e.preventDefault()
     createCards(manageAvailable(houseToRent))
+    return false
+}, false)
+
+//## Display cards which are specific types from the select
+typesSelect.addEventListener('input', function (e) {
+    e.preventDefault()
+    createCards(manageTypes(houseToRent, e.target.value))
     return false
 }, false)
