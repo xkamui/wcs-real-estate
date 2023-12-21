@@ -1,14 +1,16 @@
 import houseToRent from "./houseToRent.js"
 import createCard from "./createCard.js"
-import manageAvailable from "./manageAvailable.js"
-import manageTypes from "./manageTypes.js"
-import searchFilter from "./searchFilter.js"
+import manageFilters from "./manageFilters.js"
 
 //## Define most used elements
 const cardsElement = document.querySelector('.cards')
 const availableCheckbox = document.querySelector('#available')
 const typesSelect = document.querySelector('#types')
 const searchBar = document.querySelector('#search')
+
+//## Init filters
+const filters = {'search': null, 'available': false, 'types': 'All'}
+export default filters
 
 //## Init all cards
 createCards(houseToRent)
@@ -22,16 +24,21 @@ function createCards(cards) {
 //## Display cards which are available, from the checkbox
 availableCheckbox.addEventListener('change', function (e) {
     e.preventDefault()
-    createCards(manageAvailable(houseToRent))
+    filters.available = e.target.checked
+    createCards(manageFilters(houseToRent))
     return false
 }, false)
 
 //## Display cards which are specific types from the select
 typesSelect.addEventListener('input', function (e) {
     e.preventDefault()
-    createCards(manageTypes(houseToRent, e.target.value))
+    // houseToDisplay = manageTypes(houseToRent, e.target.value)
+    filters.types = e.target.value
+    createCards(manageFilters(houseToRent))
     return false
 }, false)
+
+
 
 //## Display cards matching the search bar's value
 searchBar.addEventListener('keyup', function(e) {
@@ -40,10 +47,12 @@ searchBar.addEventListener('keyup', function(e) {
     const searchedString = e.target.value
 
     if (searchedString.length === 0) {
-        createCards(houseToRent)
+        filters.search = null
     } else if (searchedString.length > 2) {
-        createCards(searchFilter(houseToRent, searchedString))
+        filters.search = searchedString
     }
+    
+    createCards(manageFilters(houseToRent))
 
     return false
 }, false)

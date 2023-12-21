@@ -4,6 +4,8 @@ export default function manageAvailable(cards) {
 
     if (document.querySelector('#available').checked) {
         houses = cards.filter((house) => house.available === true)
+    } else {
+        houses = allCards
     }
 
     return houses
