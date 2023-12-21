@@ -8,6 +8,7 @@ export default function createCard(card, elem) {
                                <div class="card-img"
                                  style="background-image:url('${(card.img ? card.img : 'assets/images/blank-square.webp')}') ">
                                </div>
+                               <span class="availability">${(card.available === true ? '🟢' : '🔴')}</span>
                              </div>
                              <div class="card-body">
                                <h2 class="card-title">${card.name}</h2>
